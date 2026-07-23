@@ -1,0 +1,21 @@
+.editor {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 10px;
+}
+
+.react-flow {
+    --xy-background-color: #252525;
+    --xy-node-background-color: #333333;
+    --xy-node-color: #eeeeee;
+    --xy-node-border: #555555;
+
+    --xy-edge-stroke: #888888;
+    --xy-handle-background-color: #aaaaaa;
+}

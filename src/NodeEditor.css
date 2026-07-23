@@ -1,0 +1,153 @@
+.node-editor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #202020;
+    border: 1px solid #5a5a5a;
+    padding: 20px;
+    z-index: 1000;
+    width: 50%;
+
+
+    display: flex;
+    flex-direction: column;
+}
+
+.node-editor h2 {
+    margin-top: 0;
+    text-align: center;
+    color: white;
+}
+
+.node-editor input {
+    text-align: center;
+    font-size: 150%;
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+    border: 1px solid #5a5a5a;
+    border-radius: 1px;
+}
+
+.button-cancel {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.button-save {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.button-div {
+    clear: both;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.button-edit {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+.button-delete-io {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-left: 10px;
+    
+}
+
+.button-delete-io img {
+    width: 30px;
+    height: 30px;
+}
+
+.select-io {
+    font-size: 150%;
+    width: 60%;
+    padding: 8px;
+    margin: 10px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+    border: 1px solid #5a5a5a;
+    border-radius: 1px;
+}
+
+table {
+    width: 50%;
+    color: white;
+    float: left;
+    overflow: scroll;
+    min-height: 150px;
+    height: 20%;
+}
+
+.outputs-div {
+    width: 50%;
+    color: white;
+    float: right;
+    overflow: scroll;
+    min-height: 200px;
+    height: 25%;
+}
+
+td {
+    vertical-align: top;
+}
+
+td ul {
+    min-height: 150px;
+    max-height: 25%;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #555;
+    padding: 8px;
+}
+
+td ul li {
+    padding: 5px;
+}
+
+td ul li:hover{
+    background-color: #303030;
+}
+
+textarea {
+    width: 100%;
+    min-height: 250px;
+    height: 35%;
+    margin-bottom: 25px;
+    background-color: #303030;
+    border: none;
+}
