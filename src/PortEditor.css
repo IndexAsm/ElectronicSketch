@@ -1,0 +1,26 @@
+.port-editor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #202020;
+    border: 1px solid #5a5a5a;
+    padding: 20px;
+    z-index: 1000;
+    width: 50%;
+
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+.draggable-port {
+    color: white;
+    cursor: pointer;
+    font-size: 150%;
+    display: flex;
+    justify-content: space-between;
+}

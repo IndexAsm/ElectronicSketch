@@ -5,6 +5,7 @@ export interface PortInterface {
     name: string;
     side: "left" | "right" | "top" | "bottom";
     type: "number" | "string" | "boolean";
+    direction: "in" | "out" | "io";
 }
 
 interface PortProps {

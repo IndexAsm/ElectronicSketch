@@ -1,11 +1,12 @@
 
-import { useCallback, useState } from 'react';
-import { ReactFlow, addEdge, type Connection, type Node, useNodesState, useEdgesState, Controls } from '@xyflow/react';
+import { useCallback, useRef, useState } from 'react';
+import { ReactFlow, addEdge, type Connection, type Node, useNodesState, useEdgesState, Controls, Background } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import genericNode, { type GenericNode, type GenericNodeData } from './nodes/GenericNode';
 import NodeEditor from './NodeEditor';
 
 import "./App.css";
+import { downloadProject, loadProject, saveProject } from './Project';
 
 
 const NodeTypes = {
@@ -19,26 +20,27 @@ const initialNodes:GenericNode[] = [
     position: { x: 50, y: 300 }, 
     data: { 
       name: "Voltage Regulator", 
-      inputs: [ 
+      ports: [ 
         { 
           id: "Feedback", 
           name: "Feedback",
           side: "left",
-          type: "number"
+          type: "number",
+		  direction: "in"
         }, 
         { 
           id: "Vset", 
           name: "Vset",
           side: "left",
-          type: "number"
-        }
-      ], 
-      outputs: [ 
+          type: "number",
+		  direction: "in"
+        },
         {
           id: "Vout", 
           name: "Vout",
           side: "left",
-          type: "number"
+          type: "number",
+		  direction: "out"
         }
       ] 
     }, 
@@ -50,26 +52,27 @@ const initialNodes:GenericNode[] = [
     position: { x: 0, y: 0 }, 
     data: { 
       name: "Power Transistors", 
-      inputs: [ 
+      ports: [ 
         { 
           id: "Collector", 
           name: "Collector",
           side: "right",
-          type: "number"
+          type: "number",
+		  direction: "in"
         }, 
         { 
           id: "Base", 
           name: "Base",
           side: "left",
-          type: "number"
-        }
-      ], 
-      outputs: [ 
+          type: "number",
+		  direction: "in"
+        },
         {
           id: "Emitter", 
           name: "Emitter",
           side: "left",
-          type: "number"
+          type: "number",
+		  direction: "out"
         }
       ] 
     }, 
@@ -84,56 +87,130 @@ const initialEdges = [
 
 
 function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const [editedNode, setEditedNode] = useState<GenericNode | null>(null);
 
-  const onNodeDoubleClick = useCallback((event, node) => {
-    setEditedNode(node);
-    console.log("Double clicked node:", node);
-  }, []);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
+  	const [editedNode, setEditedNode] = useState<GenericNode | null>(null);
+
+  	const onNodeDoubleClick = useCallback((event, node) => {
+  	  	setEditedNode(node);
+  	  	console.log("Double clicked node:", node);
+  	}, []);
+
+	const [projectName, setProjectName] = useState("Project");
   
  
-  //const onNodesChange = useCallback((changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)), []);
-  //const onEdgesChange = useCallback((changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)), []);
-  const onConnect = useCallback((params:Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)), []);
+  	const onConnect = useCallback((params:Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)), []);
+
+
+	const handleLoadProject = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+	
+		const file = event.target.files?.[0];
+	
+		if (!file)
+			return;
+	
+		const reader = new FileReader();
+	
+		reader.onload = () => {
+	
+			try {
+
+				const project = loadProject(reader.result as string);
+
+				setProjectName(project.name);
+		
+				setNodes(project.nodes);
+				setEdges(project.edges);
+		
+			} catch {
+		
+				alert("Invalid project file.");
+		
+			}
+			event.target.value = "";
+
+		};
+	
+		reader.readAsText(file);
+	};
  
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={NodeTypes}
-        fitView
+    <>
+		<section className='project-menu'>
+			<img src="/VertexLogo.png" alt="Logo" />
+			<div className='project-menu-inner'>
+				<input type="text" value={projectName} onChange={(e) => setProjectName((e.target as HTMLInputElement).value)} />
+				<br />
+				<div className="project-menu-button-div">
+					<button className="project-menu-button" onClick={() => {
+						const json = saveProject({ name: projectName, nodes: nodes, edges: edges });
+						downloadProject(json, projectName);
+          			}}>
+						Save
+					</button>
+					<input className='project-menu-button'
+					    ref={fileInputRef}
+					    type="file"
+					    accept=".esketch,.json"
+					    style={{ display: "none" }}
+					    onChange={handleLoadProject}
+					/>
+					<button className="project-menu-button" onClick={() => fileInputRef.current?.click()}>
+						Load
+					</button>
+					
+				</div>
+			</div>
 
-        onNodeDoubleClick={onNodeDoubleClick}
+		</section>
+      	<div style={{ width: '85vw', height: '92vh', float: 'left' }}>
+      	  <ReactFlow
+      	    nodes={nodes}
+      	    edges={edges}
+      	    onNodesChange={onNodesChange}
+      	    onEdgesChange={onEdgesChange}
+      	    onConnect={onConnect}
+      	    nodeTypes={NodeTypes}
+      	    fitView
+	
+      	    onNodeDoubleClick={onNodeDoubleClick}
+	
+      	    colorMode='dark'
 
-        colorMode='dark'
-      >
-        <Controls></Controls>
-      </ReactFlow>
+			snapGrid={[10, 10]}
+			snapToGrid={true}
+      	  >
+      	    <Controls></Controls>
+			<Background></Background>
+      	  </ReactFlow>
+	
+      	  <NodeEditor
+      	    node={editedNode}
+      	    onClose={() => setEditedNode(null)}
+      	    onSave={(node) => {
+      	        setNodes(nodes =>
+      	            nodes.map(n =>
+      	                n.id === node.id
+      	                    ? node
+      	                    : n
+      	            )
+      	        );
+			  
+      	        setEditedNode(null);
+      	    }}
+      	  />
+      	</div>
+		<section className='menu-section'>
 
-      <NodeEditor
-        node={editedNode}
-        onClose={() => setEditedNode(null)}
-        onSave={(node) => {
-            setNodes(nodes =>
-                nodes.map(n =>
-                    n.id === node.id
-                        ? node
-                        : n
-                )
-            );
-          
-            setEditedNode(null);
-        }}
-      />
-    </div>
+		</section>
+    </>
+
   )
 }
 

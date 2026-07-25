@@ -9,8 +9,7 @@ import "./GenericNode.css";
 export interface GenericNodeData {
     [key: string]: unknown;
     name: string;
-    inputs: PortInterface[];
-    outputs: PortInterface[];
+    ports: PortInterface[];
     properties?: Record<string, unknown>;
     code?: string;
 }
@@ -25,13 +24,13 @@ export default function genericNode(
     { data }: NodeProps<GenericNode>
 ) {
 
-    const topPorts = data.inputs.filter(p => p.side === "top").concat(data.outputs.filter(p => p.side === "top"));
-    const bottomPorts = data.inputs.filter(p => p.side === "bottom").concat(data.outputs.filter(p => p.side === "bottom"));
-    const leftPorts = data.inputs.filter(p => p.side === "left").concat(data.outputs.filter(p => p.side === "left"));
-    const rightPorts = data.inputs.filter(p => p.side === "right").concat(data.outputs.filter(p => p.side === "right"));
+    const topPorts = data.ports.filter(p => p.side === "top");;
+    const bottomPorts = data.ports.filter(p => p.side === "bottom");
+    const leftPorts = data.ports.filter(p => p.side === "left");
+    const rightPorts = data.ports.filter(p => p.side === "right");
 
     return (
-        <div className="generic-node" style={{ padding: "10px", height: 40 +  data.inputs.length * 20 + "px", width: "150px", position: "relative" }}>
+        <div className="generic-node" style={{ padding: "10px", height: 40 +  data.ports.length * 20 + "px", width: "150px", position: "relative" }}>
             
             <div style={{ width:"100%"}}>
             {topPorts.map((port, i) =>
