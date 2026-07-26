@@ -21,28 +21,41 @@
 }
 
 .menu-section {
-    width: 15vw;
-    height: 92vh;
     background-color: #353535;
-    float: right;
+    height: 100%;
 }
 
 .project-menu {
-    width: 100%;
-    height: 8vh;
     background-color: #303030;
     margin: 0;
     color: white;
     display: flex;
+    width: 100%;
+    align-items: stretch;
 
 }
+
+
 
 .project-menu-inner {
     padding-bottom: 10px;
     padding-left: 20px;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.logo img {
+    height: 56px;      /* or 56px */
+    width: auto;
+    display: block;
+}
 .project-menu input {
 
     font-size: 125%;
@@ -105,4 +118,19 @@
 
 .project-menu-button:active {
     background-color: #585858;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+}
+
+.canvas {
+    flex: 1;
+}
+
+.menu-section {
+    width: 15vw;
+    background: #353535;
 }

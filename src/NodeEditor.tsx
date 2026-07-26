@@ -62,7 +62,7 @@ export default function NodeEditor({
                                 {editedNode.data.ports.map((input, i) => {
                                     if (input.direction === "in")
                                     return (
-                                        <li key={input.id} style={{ display: "flex", alignItems: "center" }}>
+                                        <li key={input.name} style={{ display: "flex", alignItems: "center" }}>
                                             <h3 style={{ width: "50%"}}>
                                                 {input.name}
                                             </h3>
@@ -81,7 +81,7 @@ export default function NodeEditor({
                                     if (output.direction === "out")
                                     return (
 
-                                        <li key={output.id} style={{ display: "flex", alignItems: "center" }}>
+                                        <li key={output.name} style={{ display: "flex", alignItems: "center" }}>
                                             <h3 style={{ width: "50%"}}>
                                                 {output.name}
                                             </h3>
@@ -115,7 +115,10 @@ export default function NodeEditor({
                         Cancel
                     </button>
 
-                    <button className="button-save" onClick={() => onSave(editedNode)}>
+                    <button className="button-save" onClick={() => {
+                            if (!editPorts)
+                                onSave(editedNode)
+                        }}>
                         Save
                     </button>
                 </div>

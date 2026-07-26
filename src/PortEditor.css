@@ -17,10 +17,123 @@
 
 
 
+
+
 .draggable-port {
     color: white;
     cursor: pointer;
     font-size: 150%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    background: #202020;
+    transition: background-color 0.15s;
+}
+
+.draggable-port:hover {
+    background: #303030;
+}
+
+.drag-handle {
+    cursor: grab;
+    user-select: none;
+    margin: 0 8px;
+    transition: background-color 0.15s;
+}
+
+.drag-handle:hover {
+    background: #404040;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+    background: #505050;
+}
+
+
+select {
+    padding: 8px;
+    margin: 10px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+    border: 1px solid #5a5a5a;
+    border-radius: 1px;
+}
+
+input {
+    text-align: center;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+
+    border: none;
+    outline: none;
+}
+
+input:hover {
+    background-color: #404040;
+}
+
+.port-list {
+    color: white;
+    min-height: 100px;
+    min-width: 250px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.port-list-active {
+    border-color: #aaa;
+    background-color: #303030;
+}
+
+.port-list h3 {
+    margin: 0;
+    margin-left: 20px;
+}
+
+.add-port-button {
+    background-color: #297aa3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+.delete-icon {
+    color: white;
+    width: 22px;
+    background-color: transparent;
+}
+
+.delete-port-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.delete-port-button:hover {
+    background-color: #404040;
+}
+
+.delete-port-button:active {
+    background-color: #505050;
+}
+
+
+.drag-overlay {
+    pointer-events: none;
+    opacity: 0.9;
+    width: max-content;
 }

@@ -16,7 +16,7 @@ const NodeTypes = {
 
 const initialNodes:GenericNode[] = [
   { 
-    id: 'n3', 
+    id: crypto.randomUUID(), 
     position: { x: 50, y: 300 }, 
     data: { 
       name: "Voltage Regulator", 
@@ -48,7 +48,7 @@ const initialNodes:GenericNode[] = [
   },
 
   { 
-    id: 'n1', 
+    id: crypto.randomUUID(), 
     position: { x: 0, y: 0 }, 
     data: { 
       name: "Power Transistors", 
@@ -142,8 +142,10 @@ function App() {
  
   return (
     <>
-		<section className='project-menu'>
-			<img src="/VertexLogo.png" alt="Logo" />
+		<header className='project-menu'>
+			<div className="logo">
+                <img src="/VertexLogo.png" alt="Logo" />
+            </div>
 			<div className='project-menu-inner'>
 				<input type="text" value={projectName} onChange={(e) => setProjectName((e.target as HTMLInputElement).value)} />
 				<br />
@@ -168,47 +170,50 @@ function App() {
 				</div>
 			</div>
 
-		</section>
-      	<div style={{ width: '85vw', height: '92vh', float: 'left' }}>
-      	  <ReactFlow
-      	    nodes={nodes}
-      	    edges={edges}
-      	    onNodesChange={onNodesChange}
-      	    onEdgesChange={onEdgesChange}
-      	    onConnect={onConnect}
-      	    nodeTypes={NodeTypes}
-      	    fitView
-	
-      	    onNodeDoubleClick={onNodeDoubleClick}
-	
-      	    colorMode='dark'
+		</header>
+        <main>
+      	    <div className='canvas' >
+                    
+      	      <ReactFlow
+      	        nodes={nodes}
+      	        edges={edges}
+      	        onNodesChange={onNodesChange}
+      	        onEdgesChange={onEdgesChange}
+      	        onConnect={onConnect}
+      	        nodeTypes={NodeTypes}
+      	        fitView
+                    
+      	        onNodeDoubleClick={onNodeDoubleClick}
+                    
+      	        colorMode='dark'
+                    
+                  snapGrid={[10, 10]}
+                  snapToGrid={true}
+                  >
+      	        <Controls></Controls>
+		    	<Background></Background>
+      	      </ReactFlow>
+                    
+      	      <NodeEditor
+      	        node={editedNode}
+      	        onClose={() => setEditedNode(null)}
+      	        onSave={(node) => {
+                      setNodes(nodes =>
+                        nodes.map(n =>
+                            n.id === node.id
+                            ? node
+                            : n
+                        )
+                    );
 
-			snapGrid={[10, 10]}
-			snapToGrid={true}
-      	  >
-      	    <Controls></Controls>
-			<Background></Background>
-      	  </ReactFlow>
-	
-      	  <NodeEditor
-      	    node={editedNode}
-      	    onClose={() => setEditedNode(null)}
-      	    onSave={(node) => {
-      	        setNodes(nodes =>
-      	            nodes.map(n =>
-      	                n.id === node.id
-      	                    ? node
-      	                    : n
-      	            )
-      	        );
-			  
-      	        setEditedNode(null);
-      	    }}
-      	  />
-      	</div>
-		<section className='menu-section'>
+                    setEditedNode(null);
+                }}
+      	      />
+      	    </div>
+		    <section className='menu-section'>
 
-		</section>
+		    </section>
+        </main>
     </>
 
   )

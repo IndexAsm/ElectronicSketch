@@ -1,10 +1,12 @@
 import { Handle, Position } from "@xyflow/react";
 
+export type PortType = "number" | "string" | "boolean";
+
 export interface PortInterface {
     id: string;
     name: string;
     side: "left" | "right" | "top" | "bottom";
-    type: "number" | "string" | "boolean";
+    type: PortType;
     direction: "in" | "out" | "io";
 }
 
