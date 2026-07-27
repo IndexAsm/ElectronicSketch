@@ -1,8 +1,8 @@
 
 import { useCallback, useRef, useState } from 'react';
-import { ReactFlow, addEdge, type Connection, type Node, useNodesState, useEdgesState, Controls, Background } from '@xyflow/react';
+import { ReactFlow, addEdge, type Connection, useNodesState, useEdgesState, Controls, Background } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import genericNode, { type GenericNode, type GenericNodeData } from './nodes/GenericNode';
+import genericNode, { type GenericNode } from './nodes/GenericNode';
 import NodeEditor from './NodeEditor';
 
 import { v4 as uuidv4 } from "uuid";
@@ -98,7 +98,7 @@ function App() {
 
   	const [editedNode, setEditedNode] = useState<GenericNode | null>(null);
 
-  	const onNodeDoubleClick = useCallback((event, node) => {
+  	const onNodeDoubleClick = useCallback((event, node:GenericNode) => {
   	  	setEditedNode(node);
   	  	console.log("Double clicked node:", node);
   	}, []);

@@ -1,9 +1,8 @@
 import { type NodeProps, type Node } from "@xyflow/react";
 import type { PortInterface } from "./Port";
-import Port, { PortContainer } from "./Port";
+import { PortContainer } from "./Port";
 
 import "./GenericNode.css";
-import NodeBase from "./NodeBase";
 
 
 

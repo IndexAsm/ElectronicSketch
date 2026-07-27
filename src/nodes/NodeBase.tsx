@@ -1,4 +1,4 @@
-import Port, { PortContainer, type PortInterface } from "./Port";
+import Port, { type PortInterface } from "./Port";
 
 import "./NodeBase.css"
 
@@ -21,7 +21,7 @@ export default function NodeBase({
         <div className="node-base">
 
             <div className="port-row top">
-                {topPorts.map((port, i) => (
+                {topPorts.map((port) => (
                     <Port
                         key={port.id}
                         port={port}
@@ -35,7 +35,7 @@ export default function NodeBase({
             <div className="node-body">
 
                 <div className="port-column">
-                    {leftPorts.map((port, i) => (
+                    {leftPorts.map((port) => (
                     <Port
                         key={port.id}
                         port={port}
@@ -48,7 +48,7 @@ export default function NodeBase({
                 </div>
 
                 <div className="port-column">
-                    {rightPorts.map((port, i) => (
+                    {rightPorts.map((port) => (
                     <Port
                         key={port.id}
                         port={port}
@@ -59,7 +59,7 @@ export default function NodeBase({
             </div>
 
             <div className="port-row bottom">
-                {bottomPorts.map((port, i) => (
+                {bottomPorts.map((port) => (
                     <Port
                         key={port.id}
                         port={port}
