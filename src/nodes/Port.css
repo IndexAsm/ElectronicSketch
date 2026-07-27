@@ -1,0 +1,59 @@
+.port-name {
+    color: white;
+}
+
+.port-name-left {
+    margin-left: 5px;
+}
+
+.port-name-right {
+    margin-right: 5px;
+}
+
+
+.port {
+    position: relative;
+}
+
+.ports-left {
+    position: absolute;
+
+    left: 0;
+    top: 40px;
+    bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.ports-right {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.ports-top {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ports-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+
+    display: flex;
+    justify-content: space-evenly;
+}

@@ -1,4 +1,5 @@
 import { Handle, Position } from "@xyflow/react";
+import "./Port.css"
 
 export type PortType = "number" | "string" | "boolean";
 
@@ -12,74 +13,57 @@ export interface PortInterface {
 
 interface PortProps {
     port: PortInterface;
-    type: string;
-    length: number;
-    i: number;
 }
 
-export default function Port({ port, type, length, i }: PortProps) {
+export default function Port({ port }: PortProps) {
+    const position = {
+        left: Position.Left,
+        right: Position.Right,
+        top: Position.Top,
+        bottom: Position.Bottom,
+    }[port.side];
 
 
-    if (port.side === "top"){
-        return (
-            <div>
+    return (
+        <div className="port">
+            {port.direction !== "out" && (
                 <Handle
-                    key={port.id}
-                    id={port.id}
                     type="target"
-                    position={Position.Top}
-                    style={{
-                        top: (70 / length) * i + 40,
-                    }}
+                    position={position}
+                    id={`${port.id}-in`}
                 />
-                <div style={{ position: "absolute", top: "10px", left: (70 / length) * i + 30 }}>{port.name}</div>
-            </div>
-        );
-    } else if (port.side === "right"){
-        return (
-            <div>
+            )}
+
+            {port.direction !== "in" && (
                 <Handle
-                    key={port.id}
-                    id={port.id}
                     type="source"
-                    position={Position.Right}
-                    style={{
-                        top: (70 / length) * i + 40,
-                    }}
+                    position={position}
+                    id={`${port.id}-out`}
                 />
-                <div style={{ position: "absolute", right: "10px", top: (70 / length) * i + 30 }}>{port.name}</div>
+            )}
+
+            <div className={`port-name port-name-${port.side}`}>
+                {port.name}
             </div>
-        );
-    } else if (port.side === "left"){
-        return (
-            <div>
-                <Handle
-                    key={port.id}
-                    id={port.id}
-                    type="source"
-                    position={Position.Left}
-                    style={{
-                        top: (70 / length) * i + 40,
-                    }}
-                />
-                <div style={{ position: "absolute", left: "10px", top: (70 / length) * i + 30 }}>{port.name}</div>
-            </div>
-        );
-    } else if (port.side === "bottom"){
-        return (
-            <div>
-                <Handle
-                    key={port.id}
-                    id={port.id}
-                    type="source"
-                    position={Position.Bottom}
-                    style={{
-                        top: (70 / length) * i + 40,
-                    }}
-                />
-                <div style={{ position: "absolute", bottom: "10px", left: (70 / length) * i + 30 }}>{port.name}</div>
-            </div>
-        );
-    }
-    
+        </div>
+    );
+}
+
+
+
+interface PortContainerProps {
+    side: "top" | "bottom" | "left" | "right";
+    ports: PortInterface[];
+}
+
+export function PortContainer({ side, ports }: PortContainerProps) {
+    return (
+        <div className={`ports ports-${side}`}>
+            {ports.map(port => (
+                <div key={port.id} className={`port port-${side}`}>
+                    <Port port={port} />
+                </div>
+            ))}
+        </div>
+    );
 }

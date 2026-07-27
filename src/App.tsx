@@ -5,6 +5,9 @@ import '@xyflow/react/dist/style.css';
 import genericNode, { type GenericNode, type GenericNodeData } from './nodes/GenericNode';
 import NodeEditor from './NodeEditor';
 
+import { v4 as uuidv4 } from "uuid";
+
+
 import "./App.css";
 import { downloadProject, loadProject, saveProject } from './Project';
 
@@ -16,7 +19,7 @@ const NodeTypes = {
 
 const initialNodes:GenericNode[] = [
   { 
-    id: crypto.randomUUID(), 
+    id: uuidv4(), 
     position: { x: 50, y: 300 }, 
     data: { 
       name: "Voltage Regulator", 
@@ -48,7 +51,7 @@ const initialNodes:GenericNode[] = [
   },
 
   { 
-    id: crypto.randomUUID(), 
+    id: uuidv4(), 
     position: { x: 0, y: 0 }, 
     data: { 
       name: "Power Transistors", 

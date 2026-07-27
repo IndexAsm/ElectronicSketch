@@ -14,6 +14,9 @@ import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 
+import { v4 as uuidv4 } from "uuid";
+
+
 interface PortEditorProps {
     ports: PortInterface[];
     onClose: () => void;
@@ -358,7 +361,7 @@ export default function PortEditor({ ports, onClose, onSave, editPorts }: PortEd
         setLeftPorts(ports => [
             ...ports,
             {
-                id: crypto.randomUUID(),
+                id: uuidv4(),
                 name: "New Port",
                 direction: "in",
                 side: "left",
