@@ -1,6 +1,6 @@
 
 import { useCallback, useRef, useState } from 'react';
-import { ReactFlow, addEdge, type Connection, useNodesState, useEdgesState, Controls, Background } from '@xyflow/react';
+import { ReactFlow, addEdge, type Connection, useNodesState, useEdgesState, Controls, Background, useUpdateNodeInternals, type Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import genericNode, { type GenericNode } from './nodes/GenericNode';
 import NodeEditor from './NodeEditor';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import "./App.css";
 import { downloadProject, loadProject, saveProject } from './Project';
+import WireEdge from './WireEdge';
 
 
 const NodeTypes = {
@@ -83,8 +84,25 @@ const initialNodes:GenericNode[] = [
   },
 
 ];
-const initialEdges = [
-  { id: 'n1-n2', source: 'n1', target: 'n2' },
+const initialEdges:Edge[] = [
+{
+    id: "1",
+
+    source: initialNodes[0].id,
+    sourceHandle: "Vout-out",
+
+    target: initialNodes[1].id,
+    targetHandle: "Base-in",
+
+    type: "wire",
+
+    data: {
+        vertices: [
+            {x:400,y:150},
+            {x:400,y:300},
+        ]
+    }
+}
 ];
 
 
@@ -92,6 +110,7 @@ const initialEdges = [
 function App() {
   	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
 
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -142,6 +161,10 @@ function App() {
 	
 		reader.readAsText(file);
 	};
+
+    const edgeTypes = {
+        wire: WireEdge,
+    };
  
   return (
     <>
@@ -183,16 +206,22 @@ function App() {
       	        onNodesChange={onNodesChange}
       	        onEdgesChange={onEdgesChange}
       	        onConnect={onConnect}
+
       	        nodeTypes={NodeTypes}
+                edgeTypes={edgeTypes}
+
       	        fitView
                     
       	        onNodeDoubleClick={onNodeDoubleClick}
                     
       	        colorMode='dark'
                     
-                  snapGrid={[10, 10]}
-                  snapToGrid={true}
-                  >
+                snapGrid={[10, 10]}
+                snapToGrid={true}
+                defaultEdgeOptions={{
+                    type: "step",
+                }}
+            >
       	        <Controls></Controls>
 		    	<Background></Background>
       	      </ReactFlow>

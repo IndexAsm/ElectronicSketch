@@ -1,8 +1,9 @@
-import { type NodeProps, type Node } from "@xyflow/react";
+import { type NodeProps, type Node, useUpdateNodeInternals } from "@xyflow/react";
 import type { PortInterface } from "./Port";
 import { PortContainer } from "./Port";
 
 import "./GenericNode.css";
+import { useEffect } from "react";
 
 
 
@@ -20,7 +21,13 @@ export type GenericNode = Omit<Node, "data"> & {
 };
 
 
-export default function GenericNode({ data }: NodeProps<GenericNode>) {
+export default function GenericNode({ id, data }: NodeProps<GenericNode>) {
+
+    const updateNodeInternals = useUpdateNodeInternals();
+
+    useEffect(() => {
+        updateNodeInternals(id);
+    }, [data.ports, id]);
 
     const topPorts = data.ports.filter(p => p.side === "top");
     const bottomPorts = data.ports.filter(p => p.side === "bottom");

@@ -22,3 +22,18 @@
 }
 
 
+.node-body {
+    flex: 1;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+}
+
+.node-title {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}

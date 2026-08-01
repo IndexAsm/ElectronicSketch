@@ -19,15 +19,17 @@
 
 
 .node-header {
-    text-align: center;
+    height: 34px;
 
-    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #3a3a3a;
 
     font-weight: 600;
 
-    user-select: none;
+    background: #2b2b2b;
 }
 
 .node-body {
@@ -59,4 +61,40 @@
 
     justify-content: center;
     align-items: center;
+}
+
+.node-base {
+    position: relative;
+
+    width: 180px;
+    min-height: 90px;
+
+    overflow: visible;
+}
+
+.node-frame {
+    background: #202020;
+
+    border: 1px solid #5a5a5a;
+    border-radius: 8px;
+
+    color: white;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.35);
+}
+
+.node-frame:hover {
+    border-color: #8a8a8a;
+}
+
+.node-content {
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
 }
